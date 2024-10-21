@@ -1,119 +1,82 @@
 import 'package:flutter/material.dart';
-import '../../models/onboarding/onboarding_model.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:provider/provider.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  @override
-  _OnboardingScreenState createState() => _OnboardingScreenState();
-}
+import 'package:pethub/providers/onboarding/onboarding_provider.dart';
+import 'package:pethub/widgets/onboarding/onboarding_page_widget.dart';
+import 'package:pethub/styles/variables.dart';
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
-
-  // Using the OnboardingPageModel object
-  final List<OnboardingPageModel> onboardingPages = [
-    OnboardingPageModel(
-      title: 'Easily Find Pet Care.',
-      summary: 'Connect with trusted pet sitters nearby.',
-      image: 'assets/images/onboarding_1.png',
-    ),
-    OnboardingPageModel(
-      title: 'Help Others with Their Pets.',
-      summary: 'Take care of pets when their owners need help.',
-      image: 'assets/images/onboarding_2.png',
-    ),
-    OnboardingPageModel(
-      title: 'Track Requests Seamlessly.',
-      summary: 'Easily manage your requests and offers to help.',
-      image: 'assets/images/onboarding_3.png',
-    ),
-    OnboardingPageModel(
-      title: 'Get Started Now!',
-      summary: 'Sign up today to find the perfect care for your pets.',
-      image: 'assets/images/onboarding_4.png',
-    ),
-  ];
-
-  void _goToNextPage() {
-    if (_currentPage < onboardingPages.length - 1) {
-      _pageController.nextPage(
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-      );
-    }
-  }
-
-  void _skipToLastPage() {
-    _pageController.animateToPage(
-      onboardingPages.length - 1,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-  }
-
-  void _onPageChanged(int index) {
-    setState(() {
-      _currentPage = index;
-    });
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
+class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final onboardingProvider = Provider.of<OnboardingProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          TextButton(
-            onPressed: _skipToLastPage,
-            child: Text(
-              'Skip',
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 16,
-              ),
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              controller: onboardingProvider.pageController,
+              onPageChanged: onboardingProvider.onPageChanged,
+              itemCount: onboardingProvider.onboardingPages.length,
+              itemBuilder: (context, index) {
+                return OnboardingPage(
+                  pageModel: onboardingProvider.onboardingPages[index],
+                );
+              },
             ),
           ),
+          SmoothPageIndicator(
+            controller: onboardingProvider.pageController,
+            count: onboardingProvider.onboardingPages.length,
+            effect: WormEffect(
+              activeDotColor: AppColors.accent,
+              dotColor: const Color(0xFFCFCFCF),
+              dotHeight: 8.0,
+              dotWidth: 8.0,
+              spacing: 10.0,
+            ),
+          ),
+          SizedBox(height: 20),
+          onboardingProvider.currentPage ==
+                  onboardingProvider.onboardingPages.length - 1
+              ? _buildGetStartedButton(context)
+              : _buildBottomNavigation(context, onboardingProvider),
         ],
       ),
-      body: PageView.builder(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        itemCount: onboardingPages.length,
-        itemBuilder: (context, index) {
-          return OnboardingPage(
-            pageModel: onboardingPages[index], // Pass custom model
-          );
-        },
-      ),
-      bottomSheet: _currentPage == onboardingPages.length - 1
-          ? _buildGetStartedButton()
-          : _buildBottomNavigation(),
     );
   }
 
-  Widget _buildBottomNavigation() {
+  Widget _buildBottomNavigation(
+      BuildContext context, OnboardingProvider onboardingProvider) {
     return Container(
-      height: 60,
+      height: 120,
       width: double.infinity,
-      color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: _goToNextPage,
+            onPressed: onboardingProvider.goToNextPage,
             child: Text(
               'Next',
               style: TextStyle(
-                color: Colors.blue,
-                fontSize: 16,
+                color: AppColors.white,
+                fontSize: AppFonts.sizeLarge,
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.accent,
+              fixedSize: Size(170, 40),
+            ),
+          ),
+          TextButton(
+            onPressed: onboardingProvider.skipToLastPage,
+            child: Text(
+              'Skip',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: AppFonts.sizeLarge,
               ),
             ),
           ),
@@ -122,76 +85,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildGetStartedButton() {
+  Widget _buildGetStartedButton(BuildContext context) {
     return Container(
-      height: 60,
+      height: 120,
       width: double.infinity,
-      color: Colors.white,
       child: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Navigate to the next screen after onboarding
             Navigator.pushReplacementNamed(context, '/home');
           },
           child: Text(
             'Get Started',
             style: TextStyle(
-              fontSize: 16,
+              color: AppColors.black,
+              fontSize: AppFonts.sizeLarge,
             ),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
+            backgroundColor: AppColors.accent,
             padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
           ),
         ),
-      ),
-    );
-  }
-}
-
-// Individual Onboarding Page widget
-class OnboardingPage extends StatelessWidget {
-  final OnboardingPageModel pageModel;
-
-  const OnboardingPage({
-    required this.pageModel,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Title
-          Text(
-            pageModel.title,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 20),
-
-          // Summary
-          Text(
-            pageModel.summary,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[600],
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 40),
-
-          // Image
-          Image.asset(
-            pageModel.image,
-            height: 300,
-          ),
-        ],
       ),
     );
   }
