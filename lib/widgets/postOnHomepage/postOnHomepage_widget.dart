@@ -8,6 +8,9 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Pobranie wysokości ekranu
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Card(
       elevation: 4,
       child: Column(
@@ -15,13 +18,12 @@ class PostCard extends StatelessWidget {
         children: [
           Image.asset(
             post.imageUrl,
-            height: 150,
+            height: 180,
             fit: BoxFit.cover,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   post.title,
@@ -30,16 +32,43 @@ class PostCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4),
-                Text(
-                  'Breed: ${post.breed}',
-                  style: TextStyle(fontSize: 14),
+                SizedBox(height: screenHeight * 0.02), // Dynamiczny odstęp
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/icons/paws.png',
+                      width: 24,
+                      height: 24,
+                    ),
+                    SizedBox(width: 8),
+                    Text('Breed: ${post.breed}', style: TextStyle(fontSize: 14)),
+                  ],
                 ),
-                SizedBox(height: 4),
-                Text(
-                  'Date: ${post.date}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                SizedBox(height: screenHeight * 0.02), // Dynamiczny odstęp
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/icons/location-pin.png',
+                      width: 24,
+                      height: 24,
+                    ),
+                    SizedBox(width: 8),
+                    Text('Location: ${post.location}', style: TextStyle(fontSize: 14)),
+                  ],
                 ),
+                SizedBox(height: screenHeight * 0.02), // Dynamiczny odstęp
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/icons/clock.png',
+                      width: 24,
+                      height: 24,
+                    ),
+                    SizedBox(width: 8),
+                    Text('Date: ${post.date}', style: TextStyle(fontSize: 14)),
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.03), 
               ],
             ),
           ),

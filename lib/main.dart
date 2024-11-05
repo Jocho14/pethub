@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/onboarding/onboarding_provider.dart';
 import 'screens/onboarding/onboarding_screen.dart';
-import 'screens/home/home_screen.dart'; // Dodaj import do HomePage
+import 'screens/home/home_screen.dart'; 
+import 'package:device_preview/device_preview.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => OnboardingProvider()),
-        // Dodaj PostProvider, jeśli jest potrzebny
-        // ChangeNotifierProvider(create: (_) => PostProvider()),
-      ],
-      child: const MyApp(),
+    DevicePreview(
+      enabled: true, // Set to false to disable in production
+      builder: (context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => OnboardingProvider()),
+          // Dodaj PostProvider, jeśli jest potrzebny
+          // ChangeNotifierProvider(create: (_) => PostProvider()),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }

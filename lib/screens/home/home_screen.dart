@@ -6,22 +6,25 @@ import 'package:pethub/widgets/postOnHomepage/postOnHomepage_widget.dart';
 class HomePage extends StatelessWidget {
   final List<PostModel> posts = [
     PostModel(
-      title: 'Adopt a Friendly Dog',
+      title: 'Wow!',
       date: DateTime.now(),
       breed: 'Golden Retriever',
       imageUrl: 'assets/images/dog_1.jpg',
+      location: 'Wrocław',
     ),
     PostModel(
-      title: 'Need a Cat Sitter',
+      title: 'What a dog',
       date: DateTime.now(),
       breed: 'Siamese',
-      imageUrl: 'assets/images/cat_1.png',
+      imageUrl: 'assets/images/shiba.png',
+      location: 'Wrocław',
     ),
     PostModel(
       title: 'Looking for a Dog Walker',
       date: DateTime.now(),
       breed: 'Labrador',
       imageUrl: 'assets/images/dog_2.png',
+      location: 'Wrocław',
     ),
     // Dodaj więcej postów, jeśli chcesz
   ];
@@ -35,10 +38,10 @@ class HomePage extends StatelessWidget {
       body: GridView.builder(
         padding: EdgeInsets.all(10),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 0.75, // Ustaw proporcje kafelków
+          childAspectRatio: 0.9, 
         ),
         itemCount: posts.length,
         itemBuilder: (context, index) {

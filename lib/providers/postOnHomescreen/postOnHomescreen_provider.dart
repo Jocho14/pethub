@@ -8,14 +8,15 @@ class PostProvider extends ChangeNotifier {
       date: DateTime.now(),
       breed: 'Doge',
       imageUrl: 'assets/images/dog_1.jpg',
+      location: 'Wrocław',
     ),
     PostModel(
       title: 'Cat care available',
       date: DateTime.now().add(Duration(days: 1)),
       breed: 'Persian',
       imageUrl: 'assets/images/cat_1.png',
+      location: 'Wrocław',
     ),
-    // Dodaj więcej postów według potrzeby
   ];
 
   void addPost(PostModel post) {
