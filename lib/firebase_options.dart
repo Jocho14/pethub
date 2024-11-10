@@ -48,6 +48,7 @@ class DefaultFirebaseOptions {
       projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
       authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
       storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET']!);
+
   static FirebaseOptions android = FirebaseOptions(
     apiKey: dotenv.env['FIREBASE_ANDROID_API_KEY']!,
     appId: dotenv.env['FIREBASE_ANDROID_APP_ID']!,
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
     storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET']!,
   );
+
   static FirebaseOptions ios = FirebaseOptions(
     apiKey: dotenv.env['FIREBASE_IOS_API_KEY']!,
     appId: dotenv.env['FIREBASE_IOS_APP_ID']!,
@@ -64,6 +66,7 @@ class DefaultFirebaseOptions {
     iosClientId: dotenv.env['FIREBASE_IOS_CLIENT_ID']!,
     iosBundleId: dotenv.env['FIREBASE_BUNDLE_ID']!,
   );
+
   static FirebaseOptions macos = FirebaseOptions(
     apiKey: dotenv.env['FIREBASE_MACOS_API_KEY']!,
     appId: dotenv.env['FIREBASE_MACOS_APP_ID']!,
@@ -73,6 +76,7 @@ class DefaultFirebaseOptions {
     iosClientId: dotenv.env['FIREBASE_MACOS_CLIENT_ID']!,
     iosBundleId: dotenv.env['FIREBASE_BUNDLE_ID']!,
   );
+
   static FirebaseOptions windows = FirebaseOptions(
       apiKey: dotenv.env['FIREBASE_WINDOWS_API_KEY']!,
       appId: dotenv.env['FIREBASE_WINDOWS_APP_ID']!,
@@ -80,4 +84,5 @@ class DefaultFirebaseOptions {
       projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
       authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
       storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET']!);
+
 }
