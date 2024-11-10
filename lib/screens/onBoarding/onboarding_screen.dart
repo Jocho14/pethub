@@ -37,7 +37,7 @@ class OnboardingScreen extends StatelessWidget {
               spacing: 10.0,
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 40),
           onboardingProvider.currentPage ==
                   onboardingProvider.onboardingPages.length - 1
               ? _buildGetStartedButton(context)
@@ -50,9 +50,8 @@ class OnboardingScreen extends StatelessWidget {
   Widget _buildBottomNavigation(
       BuildContext context, OnboardingProvider onboardingProvider) {
     return Container(
-      height: 120,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 40),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -92,7 +91,7 @@ class OnboardingScreen extends StatelessWidget {
       child: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushReplacementNamed(context, '/auth');
           },
           child: Text(
             'Get Started',
