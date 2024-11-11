@@ -8,7 +8,7 @@ import 'providers/onboarding/onboarding_provider.dart';
 import 'providers/auth/auth_provider.dart';
 
 import 'screens/onboarding/onboarding_screen.dart';
-import 'screens/home/home_screen.dart'; 
+import 'screens/home/home_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'screens/auth/login_screen.dart';
 
@@ -26,17 +26,12 @@ void main() async {
       builder: (context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => OnboardingProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
           // Dodaj PostProvider, jeśli jest potrzebny
-          // ChangeNotifierProvider(create: (_) => PostProvider()),
+          ///ChangeNotifierProvider(create: (_) => PostProvider()),
         ],
         child: const MyApp(),
       ),
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => OnboardingProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ],
-      child: MyApp(),
     ),
   );
 }
