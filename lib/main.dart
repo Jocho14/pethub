@@ -8,6 +8,8 @@ import 'providers/onboarding/onboarding_provider.dart';
 import 'providers/auth/auth_provider.dart';
 
 import 'screens/onboarding/onboarding_screen.dart';
+import 'screens/home/home_screen.dart'; 
+import 'package:device_preview/device_preview.dart';
 import 'screens/auth/login_screen.dart';
 
 void main() async {
@@ -19,6 +21,16 @@ void main() async {
   );
 
   runApp(
+    DevicePreview(
+      enabled: true, // Set to false to disable in production
+      builder: (context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => OnboardingProvider()),
+          // Dodaj PostProvider, jeśli jest potrzebny
+          // ChangeNotifierProvider(create: (_) => PostProvider()),
+        ],
+        child: const MyApp(),
+      ),
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => OnboardingProvider()),
@@ -30,6 +42,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
@@ -42,6 +56,7 @@ class MyApp extends StatelessWidget {
           home: OnboardingScreen(),
           routes: {
             '/auth': (context) => LoginScreen(),
+            '/home': (context) => HomePage(),
           },
         );
       },

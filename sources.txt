@@ -1,0 +1,3 @@
+loc icon: https://www.flaticon.com/free-icon/location-pin_3179068?term=localisation&page=1&position=5&origin=search&related_id=3179068
+paw icon: https://www.flaticon.com/free-icon/paws_4225935?term=paw&page=1&position=1&origin=search&related_id=4225935
+clock: https://www.flaticon.com/free-icon/clock_2088617?term=clock&page=1&position=1&origin=search&related_id=2088617
