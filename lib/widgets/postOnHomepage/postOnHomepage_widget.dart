@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pethub/models/postOnHomepage/postOnHomepage_model.dart';
+import 'package:pethub/models/home/PostModel.dart';
 
 class PostCard extends StatelessWidget {
   final PostModel post;

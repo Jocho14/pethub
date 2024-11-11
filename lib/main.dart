@@ -27,8 +27,6 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (_) => OnboardingProvider()),
           ChangeNotifierProvider(create: (_) => AuthProvider()),
-          // Dodaj PostProvider, jeśli jest potrzebny
-          ///ChangeNotifierProvider(create: (_) => PostProvider()),
         ],
         child: const MyApp(),
       ),
@@ -48,9 +46,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: OnboardingScreen(),
+          home: HomePage(),
           routes: {
-            '/auth': (context) => LoginScreen(),
+            // '/auth': (context) => LoginScreen(),
             '/home': (context) => HomePage(),
           },
         );

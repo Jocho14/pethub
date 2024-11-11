@@ -1,53 +1,81 @@
 // screens/home_page.dart
 import 'package:flutter/material.dart';
-import 'package:pethub/models/postOnHomepage/postOnHomepage_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pethub/widgets/postOnHomepage/postOnHomepage_widget.dart';
+import 'package:pethub/screens/details/post_details_screen.dart';
+import 'package:pethub/screens/register_new_post/create_new_post_screen.dart';
+import 'package:pethub/models/home/PostModel.dart';
 
-class HomePage extends StatelessWidget {
-  final List<PostModel> posts = [
-    PostModel(
-      title: 'Wow!',
-      date: DateTime.now(),
-      breed: 'Golden Retriever',
-      imageUrl: 'assets/images/dog_1.jpg',
-      location: 'Wrocław',
-    ),
-    PostModel(
-      title: 'What a dog',
-      date: DateTime.now(),
-      breed: 'Siamese',
-      imageUrl: 'assets/images/shiba.png',
-      location: 'Wrocław',
-    ),
-    PostModel(
-      title: 'Looking for a Dog Walker',
-      date: DateTime.now(),
-      breed: 'Labrador',
-      imageUrl: 'assets/images/dog_2.png',
-      location: 'Wrocław',
-    ),
-    // Dodaj więcej postów, jeśli chcesz
-  ];
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<PostModel> posts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPosts();
+  }
+
+  // Funkcja do pobierania danych z Firestore
+  Future<void> fetchPosts() async {
+    final querySnapshot = await FirebaseFirestore.instance.collection('animals').get();
+    setState(() {
+      posts = querySnapshot.docs.map((doc) {
+        return PostModel.fromFirestore(doc);
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Available Posts'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              // Przejdź do strony dodawania ogłoszenia
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddPostPage(refreshPosts: fetchPosts),  // Przekaż funkcję refresh
+                ),
+              );
+            },
+          )
+        ],
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(10),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.9, 
-        ),
-        itemCount: posts.length,
-        itemBuilder: (context, index) {
-          return PostCard(post: posts[index]);
-        },
-      ),
+      body: posts.isEmpty
+          ? Center(child: CircularProgressIndicator())  // Ładowanie danych
+          : GridView.builder(
+              padding: EdgeInsets.all(10),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.9,
+              ),
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    // Po kliknięciu przechodzimy na stronę szczegółów
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PostDetailsPage(post: posts[index]),  // Przekazujemy post
+                      ),
+                    );
+                  },
+                  child: PostCard(post: posts[index]),  // Wyświetlamy kartę z postem
+                );
+              },
+            ),
     );
   }
 }
