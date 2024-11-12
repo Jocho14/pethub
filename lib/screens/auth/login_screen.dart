@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Buttons.google,
                   onPressed: () async {
                     await Provider.of<AuthProvider>(context, listen: false)
-                        .signInWithGoogle();
+                        .signInWithGoogle(context);
                   },
                   text: "Sign in with Google",
                 ),
