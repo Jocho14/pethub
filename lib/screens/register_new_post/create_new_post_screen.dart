@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pethub/models/home/PostModel.dart';
+import 'package:provider/provider.dart';
+import 'package:pethub/providers/auth/auth_provider.dart';
 
 class AddPostPage extends StatefulWidget {
   final Function refreshPosts;
@@ -20,6 +22,17 @@ class _AddPostPageState extends State<AddPostPage> {
 
   // Funkcja do zapisania ogłoszenia w Firestore
   Future<void> _addPost() async {
+    final currentUserId =
+        Provider.of<AuthProvider>(context, listen: false).user?.uid;
+
+    if (currentUserId == null) {
+      // Handle the case where there is no logged-in user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("You must be logged in to post!")),
+      );
+      return;
+    }
+
     final post = {
       'title': _titleController.text,
       'breed': _breedController.text,
@@ -27,6 +40,7 @@ class _AddPostPageState extends State<AddPostPage> {
       'description': _descriptionController.text,
       'imageUrl': _imageUrlController.text,
       'date': Timestamp.now(),
+      'userId': currentUserId,
     };
 
     // Zapisz dane w kolekcji Firestore

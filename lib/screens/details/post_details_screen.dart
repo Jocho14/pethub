@@ -1,6 +1,6 @@
-// screens/post_details_page.dart
 import 'package:flutter/material.dart';
 import 'package:pethub/models/home/PostModel.dart';
+import 'package:pethub/styles/variables.dart';
 
 class PostDetailsPage extends StatelessWidget {
   final PostModel post;
@@ -61,6 +61,19 @@ class PostDetailsPage extends StatelessWidget {
                 post.description, // Wyświetlamy pobrany opis
                 style: TextStyle(fontSize: 16),
               ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.accent,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/chat',
+                    arguments: post.userId,
+                  );
+                },
+                child: Text('Chat'),
+              ),
             ],
           ),
         ),
@@ -68,4 +81,3 @@ class PostDetailsPage extends StatelessWidget {
     );
   }
 }
-

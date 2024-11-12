@@ -6,16 +6,17 @@ class PostModel {
   final String breed;
   final String imageUrl;
   final String location;
-  final String description;  // Dodajemy nowe pole dla opisu
+  final String description;
+  final String userId;
 
-  
   PostModel({
     required this.title,
     required this.date,
     required this.breed,
     required this.imageUrl,
     required this.location,
-    required this.description, // Dodajemy parametr dla opisu
+    required this.description,
+    required this.userId,
   });
 
   factory PostModel.fromFirestore(DocumentSnapshot doc) {
@@ -26,7 +27,8 @@ class PostModel {
       breed: data['breed'],
       imageUrl: data['imageUrl'],
       location: data['location'],
-      description: data['description'] ?? 'No description available', // Domyślny tekst, jeśli brak opisu
+      description: data['description'] ?? 'No description available',
+      userId: data['userId'],
     );
   }
 }
