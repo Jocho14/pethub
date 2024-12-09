@@ -61,20 +61,33 @@ class PostDetailsPage extends StatelessWidget {
                 post.description, // Wyświetlamy pobrany opis
                 style: TextStyle(fontSize: 16),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/chat',
-                    arguments: post.userId,
-                  );
-                },
-                child: Text('Chat'),
-              ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        child: Container(
+          color: Colors.transparent,
+          height: 60.0,
+          child: Align(
+            alignment: Alignment.center,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, '/chat', arguments: post.userId);
+              },
+              icon: Icon(Icons.chat, size: 30.0),
+              label: Text('Chat'),
+              style: ElevatedButton.styleFrom(
+                iconColor: AppColors.accentDark,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+            ),
           ),
         ),
       ),
