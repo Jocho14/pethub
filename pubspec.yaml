@@ -35,11 +35,13 @@ dependencies:
   device_preview: ^1.0.0
   firebase_core: ^3.7.0
   cloud_firestore: ^5.4.4
+  firebase_storage: ^12.3.5
   sign_in_button: ^3.2.0
   flutter_dotenv: ^5.2.1
   cupertino_icons: ^1.0.8
   google_sign_in: ^6.2.2
   firebase_auth: ^5.3.2
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +60,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
+    - assets/.env
     - assets/images/
     - assets/icons/
 
