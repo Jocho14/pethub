@@ -16,7 +16,7 @@ class PostCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset(
+          Image.network(
             post.imageUrl,
             height: 180,
             fit: BoxFit.cover,
@@ -41,7 +41,8 @@ class PostCard extends StatelessWidget {
                       height: 24,
                     ),
                     SizedBox(width: 8),
-                    Text('Breed: ${post.breed}', style: TextStyle(fontSize: 14)),
+                    Text('Breed: ${post.breed}',
+                        style: TextStyle(fontSize: 14)),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.02), // Dynamiczny odstęp
@@ -53,7 +54,8 @@ class PostCard extends StatelessWidget {
                       height: 24,
                     ),
                     SizedBox(width: 8),
-                    Text('Location: ${post.location}', style: TextStyle(fontSize: 14)),
+                    Text('Location: ${post.location}',
+                        style: TextStyle(fontSize: 14)),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.02), // Dynamiczny odstęp
@@ -68,7 +70,7 @@ class PostCard extends StatelessWidget {
                     Text('Date: ${post.date}', style: TextStyle(fontSize: 14)),
                   ],
                 ),
-                SizedBox(height: screenHeight * 0.03), 
+                SizedBox(height: screenHeight * 0.03),
               ],
             ),
           ),

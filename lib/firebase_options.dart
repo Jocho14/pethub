@@ -16,6 +16,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 // / );
 /// ```
 class DefaultFirebaseOptions {
+  static Future<void> initialize() async {
+    try {
+      await dotenv.load(fileName: "assets/.env");
+      print('.env file loaded successfully');
+    } catch (e) {
+      print('Error loading .env file: $e');
+    }
+  }
+
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
@@ -84,5 +93,4 @@ class DefaultFirebaseOptions {
       projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
       authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
       storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET']!);
-
 }

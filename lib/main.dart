@@ -15,8 +15,18 @@ import 'screens/message/message_screen.dart';
 import 'screens/chat_history/chat_history_screen.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
+  // Load .env file
+  try {
+    await dotenv.load(fileName: ".env");
+
+    print('.env file loaded successfully');
+  } catch (e) {
+    print('Error loading .env file: $e');
+  }
+
+  await DefaultFirebaseOptions.initialize();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     DevicePreview(
